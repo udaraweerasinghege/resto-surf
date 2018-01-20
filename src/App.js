@@ -4,10 +4,26 @@ import RestoTile from './components/RestoTile/RestoTile'
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = { loading : true}
+  }
+
   render() {
+    if(this.state.loading) {
+      return (
+        <div className="App">
+          Loading...
+        </div>
+      );
+    }
+
     return (
       <div className="App">
-        <RestoTile/>
+        {this.state.restaurants.map((r) => {
+          return <RestoTile name={r.name} key={r.id} logo={r.logo}/>
+        })}
       </div>
     );
   }
@@ -23,12 +39,13 @@ class App extends Component {
         restaurants {
           id
           name
+          logo
         }
       }
       `
       const restoRes = await fetch(`/graphql?query=${query}`);
       const restos = await restoRes.json();
-      this.setState({...this.state, restaurants: restos.data.restaurants})
+      this.setState({...this.state, restaurants: restos.data.restaurants, loading: false})
     } catch(e) {
       throw(e)
     }

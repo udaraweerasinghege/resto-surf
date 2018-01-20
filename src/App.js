@@ -11,6 +11,29 @@ class App extends Component {
       </div>
     );
   }
+
+  componentWillMount = () => {
+    this.restoRequest();
+  }
+  
+  restoRequest = async () => {
+    try {
+      const query = `
+      {
+        restaurants {
+          id
+          name
+        }
+      }
+      `
+      const restoRes = await fetch(`/graphql?query=${query}`);
+      const restos = await restoRes.json();
+      this.setState({...this.state, restaurants: restos.data.restaurants})
+    } catch(e) {
+      throw(e)
+    }
+    
+  }
 }
 
 export default App;

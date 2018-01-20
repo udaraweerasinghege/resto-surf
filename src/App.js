@@ -1,14 +1,30 @@
-import React, { Component } from 'react';
-import RestoTile from './components/RestoTile/RestoTile'
+import React, { Component, Fragment } from "react";
+import Header from "./components/header";
+import SearchBar from "./components/searchBar";
+import RestoTile from "./components/RestoTile/RestoTile";
 
-import './App.css';
+import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <RestoTile/>
-      </div>
+      <Fragment>
+        <Header />
+        <div className="App">
+          <SearchBar />
+          <div className="resto-list">
+            <RestoTile />
+            <RestoTile />
+            <RestoTile />
+            <RestoTile />
+            <RestoTile />
+            <RestoTile />
+            <RestoTile />
+            <RestoTile />
+            <RestoTile />
+          </div>
+        </div>
+      </Fragment>
     );
   }
 }

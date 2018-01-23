@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+
 
 class RestoTile extends Component {
-
   render() {
+    var divStyle = {
+      backgroundImage: `url('${this.props.logo}')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    };
     return (
-      <div className="tile-container">
-        <img src={this.props.logo} className="resto-img" alt="logo" />
-        <div className="resto-title">{this.props.name}</div>
+      <div className="tile-container" style={divStyle}>
+        <div className="tile-name-container">
+          <div className="resto-name">{this.props.name}</div>
+        </div>
       </div>
     );
   }

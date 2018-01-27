@@ -1,14 +1,32 @@
-.App {
+html, body {
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
   max-width: 1440px;
   width: 80%;
+  margin: 0 auto;
+}
+
+.page-content {
+  flex: 1;  
   margin: 5% auto;
+}
+
+.rando-resto-desc {
+  font-weight: bold;
 }
 
 .resto-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 50px 5%;
-    margin: 5% auto;
 }
 
 .tile-container {

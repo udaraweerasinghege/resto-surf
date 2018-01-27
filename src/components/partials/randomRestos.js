@@ -18,9 +18,14 @@ class RandomRestos extends Component {
         }
         return (
             <Fragment>
-                {randomRestoArr.map(r => {
-                    return <RestoTile name={r.name} key={r.id} img={r.logo} />;
-                })}
+                <p className="rando-resto-desc">Here are some random restaurants for you:</p>
+                <div className="resto-list">
+                    {randomRestoArr.map(r => {
+                        return (
+                            <RestoTile name={r.name} key={r.id} img={r.logo} />
+                        );
+                    })}
+                </div>
             </Fragment>
         );
     }

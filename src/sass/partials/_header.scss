@@ -3,8 +3,32 @@ header {
     color: #fff;
     padding: 20px 0;
     .header-container {
-      max-width: 1440px;
-      width: 80%;
-      margin: 0 auto;
+        display: flex;
+        > div {
+          flex: 1;
+          align-content: center;
+        }
+        nav.header-menu {
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: flex-end;
+                li {
+                    a {
+                        color: $button_font_color;
+                        text-decoration: none;
+                        @include transition;
+                        &:hover {
+                            color: $link_hover_color;
+                        }
+                    }
+                    &:not(:last-of-type) {
+                        margin-right: 5%;
+                    }
+                }
+            }
+        }
     }
-  }
+}

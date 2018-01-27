@@ -5,7 +5,6 @@ import Home from "./components/pages/page-home";
 import NotFound from "./components/pages/page-404";
 import Stats from "./components/pages/page-stats";
 import ViewAll from "./components/pages/page-viewAll";
-// import Loader from "./partials/loader";
 
 import "./App.css";
 

@@ -36,21 +36,17 @@ class Home extends Component {
             throw e;
         }
     };
-    
+
     render() {
         if (this.state.restaurants) {
             return (
                 <Layout>
                     <SearchBar />
-                    <div className="resto-list">
-                        <RandomRestos restos={this.state.restaurants} />
-                    </div>
+                    <RandomRestos restos={this.state.restaurants} />
                 </Layout>
             );
         } else {
-            return (
-                <Loader loading="true" />
-            )
+            return <Loader loading="true" />;
         }
     }
 }

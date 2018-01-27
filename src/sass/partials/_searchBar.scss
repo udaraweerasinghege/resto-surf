@@ -1,13 +1,28 @@
-.search-bar {
-    text-align: center;
-    input {
-        margin: 0;
-        display: inline-block;
-    }
-    input[type=text] {
-        width: 80%;
-    }
-    input[type=submit] {
-        width: 20%;
+.search-bar-container {
+    form.search-bar {
+        text-align: center;
+        display: flex;        
+        input {
+            margin: 0;
+            font-family: $main_font;
+        }
+        input[type=text] {
+            flex: 2 2 75%;
+            margin-right: 5%;
+            background: $search_bar;
+            border: none;
+            padding: 10px 20px;
+        }
+        input[type=submit] {
+            flex: 1 1 250px;
+            width: 25%;
+            background: $main_color;
+            color: $button_font_color;
+            padding: 10px 20px;
+            border: none;
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
 }

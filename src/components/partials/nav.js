@@ -15,6 +15,9 @@ class Nav extends Component {
                     <li>
                         <NavLink to="/stats" exact>Stats</NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/restaurant" exact>Restaurant</NavLink>
+                    </li>
                 </ul>
             </nav>
         );

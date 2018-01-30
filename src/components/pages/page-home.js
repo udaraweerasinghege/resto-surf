@@ -22,6 +22,10 @@ class Home extends Component {
                   id
                   name
                   logo
+                  likes
+                  dislikes
+                  notes
+                  visits
                 }
               }
             `;

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-
 class RestoTile extends Component {
   render() {
     var divStyle = {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
+import Loader from "./components/partials/loader";
 import Home from "./components/pages/page-home";
 import NotFound from "./components/pages/page-404";
 import Stats from "./components/pages/page-stats";
@@ -10,18 +10,83 @@ import Restaurant from "./components/pages/page-restaurant";
 import "./App.css";
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { loading: true };
+    }
+
+    componentWillMount = () => {
+        this.restoRequest();
+    };
+
+    restoRequest = async () => {
+        try {
+            const query = `
+              {
+                restaurants {
+                  id
+                  name
+                  logo
+                  likes
+                  dislikes
+                  notes
+                  visits
+                }
+              }
+            `;
+            const restoRes = await fetch(`/graphql?query=${query}`);
+            const restos = await restoRes.json();
+            this.setState({
+                ...this.state,
+                restaurants: restos.data.restaurants,
+                loading: false
+            });
+        } catch (e) {
+            throw e;
+        }
+    };
     render() {
-        return (
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/all" component={ViewAll} />
-                    <Route exact path="/stats" component={Stats} />
-                    <Route exact path="/restaurant" component={Restaurant} />
-                    <Route exact path="*" component={NotFound} />
-                </Switch>
-            </BrowserRouter>
-        );
+        if (this.state.restaurants) {
+            return (
+                <BrowserRouter>
+                    <Switch>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <Home restaurants={this.state.restaurants} />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/restaurants"
+                            render={() => (
+                                <ViewAll restaurants={this.state.restaurants} />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/stats"
+                            render={() => (
+                                <Stats restaurants={this.state.restaurants} />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/restaurant"
+                            render={() => (
+                                <Restaurant
+                                    restaurants={this.state.restaurants}
+                                />
+                            )}
+                        />
+                        <Route exact path="*" component={NotFound} />
+                    </Switch>
+                </BrowserRouter>
+            );
+        } else {
+            return <Loader loading="true" />;
+        }
     }
 }
 

@@ -10,7 +10,7 @@ class Nav extends Component {
                         <NavLink to="/" exact>Home</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/all" exact>View All</NavLink>
+                        <NavLink to="/restaurants" exact>Resurant List</NavLink>
                     </li>
                     <li>
                         <NavLink to="/stats" exact>Stats</NavLink>

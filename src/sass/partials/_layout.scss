@@ -1,5 +1,6 @@
 html, body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 #root {
@@ -16,7 +17,7 @@ html, body {
 
 .page-content {
   flex: 1;  
-  margin: 5% auto;
+  margin: 3% auto;
 }
 
 .rando-resto-desc {
@@ -32,6 +33,9 @@ html, body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 50px 5%;
+    @media (max-width: 450px) {
+      grid-gap: 25px 5%;
+    }
 }
 
 .tile-container {
@@ -39,6 +43,14 @@ html, body {
     position: relative;
     border-radius: 3px;
     box-shadow: 0 3px 15px rgba(0,0,0,0.25);
+    h2 {
+      font-size: 18px;
+    }
+    @media (max-width: 450px) {
+      width: 135%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 }
 
 .tile-name-container {

@@ -1,32 +1,38 @@
 header {
     background: $main_color;
     color: #fff;
-    padding: 20px 0;
+    z-index: 100;
+    min-height: 50px;
+    display: flex;
     .header-container {
         display: flex;
-        > div {
-          flex: 1;
-          align-content: center;
+        align-items: center;
+        .left-half {
+            flex: 1;
         }
-        nav.header-menu {
-            ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                justify-content: flex-end;
-                li {
-                    a {
-                        color: $button_font_color;
-                        text-decoration: none;
-                        @include transition;
-                        &:hover {
-                            color: $link_hover_color;
-                        }
-                    }
-                    &:not(:last-of-type) {
-                        margin-right: 5%;
-                    }
+        .right-half {
+            flex: 2;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        a {
+            color: $button_font_color;
+            text-decoration: none;
+            @include transition;
+            &:hover {
+                color: $link_hover_color;
+            }
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            li {
+                &:not(:last-of-type) {
+                    margin-right: 5%;
                 }
             }
         }

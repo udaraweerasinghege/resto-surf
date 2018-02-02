@@ -27,7 +27,7 @@ class Stats extends Component {
             <Layout>
                 <h1 className="page-title">Stats</h1>
                 <h2>All Time</h2>
-                <ul>
+                <ul className="stats-list">
                     {allTimeArr.map((r, index) => {
                         return <RestoRank name={r.name} key={r.id} rank={index + 1} visits={r.visits}/>;
                     })}

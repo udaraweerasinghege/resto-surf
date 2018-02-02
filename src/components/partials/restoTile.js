@@ -8,6 +8,7 @@ class RestoTile extends Component {
       backgroundPosition: "center"
     };
 
+    // slug should be generated and kept in db? and unique
     var slug = this.props.name.replace(/\s+/g, '-').toLowerCase();
 
     return (

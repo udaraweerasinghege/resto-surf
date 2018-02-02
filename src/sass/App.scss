@@ -1,3 +1,6 @@
+// Third-party
+@import 'vendor/normalize';
+
 // Modules and Variables
 @import 'modules/variables';
 @import 'modules/mixins';
@@ -5,11 +8,10 @@
 // Partials
 @import 'partials/reset';
 @import 'partials/layout';
+@import 'partials/stats';
+@import 'partials/single';
 @import 'partials/global';
 @import 'partials/loader';
 @import 'partials/footer';
 @import 'partials/header';
 @import 'partials/searchBar';
-
-// Third-party
-@import 'vendor/normalize';

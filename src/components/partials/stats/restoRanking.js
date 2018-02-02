@@ -3,11 +3,13 @@ import React, { Component } from "react";
 class RestoRank extends Component {
     render() {
         return (
-            <li key={this.props.name}>
-                <p>{this.props.rank}</p>
-                <p>{this.props.name}</p>
-                <p>{this.props.visits}</p>
-            </li>
+            <a className="resto-rank-tile" href={this.props.name}>
+                <li key={this.props.name}>
+                    <p className="resto-rank-tile-rank">{this.props.rank}</p>
+                    <p className="resto-rank-tile-name">{this.props.name}</p>
+                    <p className="resto-rank-tile-visits">{this.props.visits}</p>
+                </li>
+            </a>
         )
     }
 }

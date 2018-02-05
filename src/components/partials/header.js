@@ -8,6 +8,7 @@ class Header extends Component {
                 <div className="header-container container">
                     <div className="left-half">
                         <NavLink to="/" exact>
+                            <img id="nav-logo" src="/images/dolphin.svg" />
                             <h1>Resto Surf</h1>
                         </NavLink>
                     </div>

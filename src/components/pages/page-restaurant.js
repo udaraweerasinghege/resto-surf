@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import Banner from "../partials/banner";
 import Layout from "../layout";
 
 class Restaurant extends Component {
     stringToList = string => {
-        return string.split("\n").map((item, key) => {
+        return string.split("\n").map((item) => {
             return (
-                <li key={key}>
+                <li key={item}>
                     {item}
                     <br />
                 </li>
@@ -23,17 +24,9 @@ class Restaurant extends Component {
             notes
         } = this.props.restaurant;
 
-        var headerStyle = {
-            backgroundImage: `url('${logo}')`
-        };
-
         return (
             <Layout>
-                <div className="restaurant-header" style={headerStyle} />
-                <div className="restaurant-header-details">
-                    <h1 className="restaurant-name">{name}</h1>
-                    <hr className="restaurant-divider" />
-                </div>
+                <Banner image={logo} title={name} />
                 <div className="restaurant-details">
                     <div className="restaurant-details-section restaurant-details-liked">
                         <h2>We Liked:</h2>

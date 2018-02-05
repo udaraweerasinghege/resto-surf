@@ -1,10 +1,15 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
     font-family: $main_font;
     color: $main_font_color;
 }
 
 h1 {
-    font-size: 42px;
+    font-size: 46px;
 }
 
 h2 {
@@ -20,6 +25,10 @@ p {
 li {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+a {
+    color: inherit;
 }
 
 .btn {

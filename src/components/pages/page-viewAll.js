@@ -1,19 +1,17 @@
 import React, { Component } from "react";
-import RestoTile from "../partials/restoTile";
-import SearchBar from "../partials/searchBar";
+import RestaurantSearch from "../partials/restaurantSearch";
+import Banner from "../partials/banner";
 import Layout from "../layout";
 
 class ViewAll extends Component {
     render() {
         return (
             <Layout>
-                <SearchBar />
-                <h1 className="page-title">Restaurant List</h1>
-                <div className="resto-list">
-                    {this.props.restaurants.map(r => {
-                        return <RestoTile name={r.name} key={r.id} img={r.logo} />;
-                    })}
-                </div>
+                <Banner 
+                    title="All Restaurants" 
+                    image="/images/header-2.jpg"
+                />
+                <RestaurantSearch restaurants={this.props.restaurants} />
             </Layout>
         );
     }

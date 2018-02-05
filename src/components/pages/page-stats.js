@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RestoRank from "../partials/stats/restoRanking";
+import Banner from "../partials/banner";
 import Layout from "../layout";
 
 class Stats extends Component {
@@ -25,7 +26,11 @@ class Stats extends Component {
 
         return (
             <Layout>
-                <h1 className="page-title">Stats</h1>
+                <Banner 
+                    title="Stats" 
+                    subtitle="Top restaurants by visits" 
+                    image="/images/header-3.jpg"
+                />
                 <h2>All Time</h2>
                 <ul className="stats-list">
                     {allTimeArr.map((r, index) => {

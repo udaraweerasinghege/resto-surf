@@ -1,4 +1,5 @@
 .search-bar-container {
+    margin-top: 160px;
     form.search-bar {
         text-align: center;
         display: flex;        
@@ -13,16 +14,24 @@
             background: $search_bar;
             border: none;
             padding: 10px 20px;
+            border-radius: 3px;
+            opacity: 0.9;
         }
         input[type=submit] {
             flex: 1 1 250px;
             width: 25%;
-            background: $main_color;
+            background: rgba(0,0,0,0.75);
             color: $button_font_color;
             padding: 10px 20px;
-            border: none;
+            border: 2px solid #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 15px;
+            @include transition;
             &:hover {
                 cursor: pointer;
+                background: rgba(61, 67, 78, 0.75);
             }
         }
     }

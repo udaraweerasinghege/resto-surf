@@ -12,13 +12,29 @@ header {
         }
         .right-half {
             flex: 2;
+            .active {
+                position: relative;
+                &::after {
+                    content: '';
+                    width: 100%;
+                    display: block;
+                    height: 2px;
+                    background: #fff;
+                    position: absolute;
+                    bottom: -8px;
+                    opacity: 1;
+                }
+            }
         }
         h1 {
-            font-size: 24px;
+            font-size: 18px;
+            letter-spacing: 1px;
         }
         a {
             color: $button_font_color;
             text-decoration: none;
+            display: flex;
+            align-items: center;
             @include transition;
             &:hover {
                 color: $link_hover_color;
@@ -35,6 +51,10 @@ header {
                     margin-right: 5%;
                 }
             }
+        }
+        #nav-logo {
+            max-height: 30px;
+            margin-right: 10px; 
         }
     }
 }

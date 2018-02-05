@@ -17,10 +17,10 @@ html, body {
 
 .page-content {
   flex: 1;  
-  margin: 3% auto;
 }
 
 .rando-resto-desc {
+  font-size: 22px;
   font-weight: bold;
   letter-spacing: 0.25px;
 }
@@ -33,6 +33,7 @@ html, body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 50px 5%;
+    margin: 30px auto;
     @media (max-width: 450px) {
       grid-gap: 25px 5%;
     }
@@ -63,6 +64,5 @@ html, body {
   .resto-name {
     text-align: center;
     padding: 12px;
-    color: $main_color;
   }
 }

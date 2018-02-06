@@ -35,6 +35,11 @@ class Header extends Component {
                                         Restaurant
                                     </NavLink>
                                 </li>
+                                <li>
+                                    <NavLink to="/add" exact>
+                                        Add New
+                                    </NavLink>
+                                </li>
                             </ul>
                         </nav>
                     </div>

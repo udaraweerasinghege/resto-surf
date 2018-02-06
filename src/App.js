@@ -6,6 +6,7 @@ import NotFound from "./components/pages/page-404";
 import Stats from "./components/pages/page-stats";
 import ViewAll from "./components/pages/page-viewAll";
 import Restaurant from "./components/pages/page-restaurant";
+import AddNew from "./components/pages/page-addRestaurant";
 
 import "./App.css";
 
@@ -85,6 +86,13 @@ class App extends Component {
                                 <Restaurant
                                     restaurant={this.state.restaurants.find(this.findRestaurant)}
                                 />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/add"
+                            render={() => (
+                                <AddNew />
                             )}
                         />
                         <Route exact path="*" component={NotFound} />

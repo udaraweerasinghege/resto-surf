@@ -4,7 +4,9 @@ import RestoTile from "./restoTile";
 class RestaurantSearch extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            search: ''
+        };
     }
 
     componentWillMount = () => {
@@ -19,17 +21,27 @@ class RestaurantSearch extends Component {
         var url = new URL(url_string);
         var search = url.searchParams.get("search");
         if (search) {
-            console.log(search);
-            this.setState({ search });
-            document.getElementById("restaurant-search").value == search;
+            this.setState({ search }, function() {
+                var searchTerm = this.state.search;
+                document.getElementById("restaurant-search").value == searchTerm;
+                this.filterRestaurants(searchTerm);
+            });
         }
     }
 
-    filterRestaurants = e => {
+    handleChange = e => {
+        var searchTerm = e.target.value;
+        this.setState({search: searchTerm}, function() {
+            var searchState = this.state.search;
+            this.filterRestaurants(searchState)
+        })
+    }
+
+    filterRestaurants = search => {
         var updatedList = this.state.restaurants;
         updatedList = updatedList.filter(function(item) {
             return (
-                item.name.toLowerCase().search(e.target.value.toLowerCase()) !== -1
+                item.name.toLowerCase().search(search.toLowerCase()) !== -1
             );
         });
         this.setState({ filteredRestaurants: updatedList });
@@ -42,13 +54,19 @@ class RestaurantSearch extends Component {
         } else {
             listToDisplay = this.state.restaurants;
         }
-        return (
-            <div className="resto-list">
-                {listToDisplay.map(r => {
-                    return <RestoTile name={r.name} key={r.id} img={r.logo} />;
-                })}
-            </div>
-        )
+        if (listToDisplay.length > 0) {
+            return (
+                <div className="resto-list">
+                    {listToDisplay.map(r => {
+                        return <RestoTile name={r.name} key={r.id} img={r.logo} />;
+                    })}
+                </div>
+            )
+        } else {
+            return (
+                <p>No restaurants to display.</p>
+            )
+        }
     };
 
     render() {
@@ -59,8 +77,9 @@ class RestaurantSearch extends Component {
                         <input
                             type="text"
                             placeholder="Search for restaurant..."
-                            onChange={this.filterRestaurants}
+                            onChange={this.handleChange}
                             id="restaurant-search"
+                            value={this.state.search}
                         />
                         <input type="submit" value="Search" />
                     </form>

@@ -23,7 +23,6 @@ class RestaurantSearch extends Component {
         if (search) {
             this.setState({ search }, function() {
                 var searchTerm = this.state.search;
-                document.getElementById("restaurant-search").value == searchTerm;
                 this.filterRestaurants(searchTerm);
             });
         }
@@ -74,6 +73,7 @@ class RestaurantSearch extends Component {
             <Fragment>
                 <div className="search-bar-container">
                     <form className="search-bar">
+                        <i className="fa fa-search" id="search-icon"/>
                         <input
                             type="text"
                             placeholder="Search for restaurant..."

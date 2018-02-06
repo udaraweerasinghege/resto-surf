@@ -31,7 +31,7 @@ html, body {
 
 .resto-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 50px 5%;
     margin: 30px auto;
     @media (max-width: 450px) {
@@ -44,8 +44,12 @@ html, body {
     position: relative;
     border-radius: 3px;
     box-shadow: 0 3px 15px rgba(0,0,0,0.25);
+    @include transition;
     h2 {
       font-size: 18px;
+    }
+    &:hover {
+      transform: scale(1.05);
     }
     @media (max-width: 450px) {
       width: 135%;

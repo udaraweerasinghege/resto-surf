@@ -1,19 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 
-class RestoRank extends Component {
-    render() {
-        return (
-            <li className="resto-rank-tile" key={this.props.name}>
-                <a href={this.props.name}>
-                    <p className="resto-rank-tile-rank">{this.props.rank}</p>
-                    <p className="resto-rank-tile-name">{this.props.name}</p>
-                    <p className="resto-rank-tile-visits">
-                        {this.props.visits}
-                    </p>
-                </a>
-            </li>
-        );
-    }
-}
-
-export default RestoRank;
+export default ({ name, rank, visits }) => {
+    return (
+        <li className="resto-rank-tile" key={name}>
+            <a href={name}>
+                <p className="resto-rank-tile-rank">{rank}</p>
+                <p className="resto-rank-tile-name">{name}</p>
+                <p className="resto-rank-tile-visits">{visits}</p>
+            </a>
+        </li>
+    );
+};

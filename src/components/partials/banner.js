@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 
-class Banner extends Component {
-
-    Subtitle = (subtitle) => {
+export default ({ subtitle, image, title }) => {
+    var Subtitle = (subtitle) => {
         if (subtitle) {
             return (
                 <Fragment>
@@ -12,19 +11,19 @@ class Banner extends Component {
         }
     }
 
-    Title = (title) => {
+    var Title = (title) => {
         if (title) {
             return (
                 <div className="banner-header-details">
                     <h1 className="banner-title">{title}</h1>
                     <hr className="banner-divider" />
-                    {this.Subtitle(this.props.subtitle)}
+                    {Subtitle(subtitle)}
                 </div>
             )
         }
     }
 
-    RandomHeader = () => {
+    var RandomHeader = () => {
         //Exclusive
         const max = 6;
         //Inclusive
@@ -32,12 +31,12 @@ class Banner extends Component {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    BannerImage = (image) => {
+    var BannerImage = (image) => {
         var bannerImage;
         if (image) {
             bannerImage = image;
         } else {
-            bannerImage = `/images/header-${this.RandomHeader()}.jpg`;
+            bannerImage = `/images/header-${RandomHeader()}.jpg`;
         }    
         
         var headerStyle = {
@@ -49,15 +48,10 @@ class Banner extends Component {
         )
     }
 
-    render() {
-        
-        return (
-            <Fragment>
-                {this.BannerImage(this.props.image)}
-                {this.Title(this.props.title)}
-            </Fragment>
-        );
-    }
-}
-
-export default Banner;
+    return (
+       <Fragment>
+            {BannerImage(image)}
+            {Title(title)}
+        </Fragment>
+    )
+};

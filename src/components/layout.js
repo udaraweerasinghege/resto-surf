@@ -1,29 +1,22 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import Header from "./partials/header";
 import Footer from "./partials/footer";
 
-class Layout extends Component {
-
-    PageName = () => {
-        const page = this.props.page;
+export default ({ page, children }) => {
+    var PageName = () => {
         if (page) {
             return page;
         } else {
             return '';
         }
     }
-
-    render() {
-        return (
-            <Fragment>
-                <Header />
-                <div className={`container page-content ${this.PageName()}`}>
-                    {this.props.children}
-                </div>
-                <Footer />
-            </Fragment>
-        );
-    }
+    return (
+        <Fragment>
+            <Header />
+            <div className={`container page-content ${PageName()}`}>
+                {children}
+            </div>
+            <Footer />
+        </Fragment>
+    );
 }
-
-export default Layout;

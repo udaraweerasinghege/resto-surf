@@ -13,6 +13,21 @@
             margin-right: 0;
         }
     }
+    .restaurant-details-visits {
+        display: flex;
+        align-items: start;
+        h2 {
+            margin-right: 30px;
+        }
+        #restaurant-visits-count {
+            line-height: 10px;
+        }
+        .visits-btn {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 40px;
+        }
+    }
     @media (max-width: 1200px) {
         width: 100%;
     }

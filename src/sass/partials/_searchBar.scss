@@ -3,6 +3,7 @@
     form.search-bar {
         text-align: center;
         display: flex;        
+        position: relative;
         input {
             margin: 0;
             font-family: $main_font;
@@ -16,6 +17,8 @@
             padding: 10px 20px;
             border-radius: 3px;
             opacity: 0.9;
+            font-family: 'FontAwesome', $main_font;
+            padding-left: 50px;
         }
         input[type=submit] {
             flex: 1 1 250px;
@@ -33,6 +36,13 @@
                 cursor: pointer;
                 background: rgba(61, 67, 78, 0.75);
             }
+        }
+        #search-icon {
+            position: absolute;
+            left: 20px;
+            z-index: 10;
+            top: 12px;
+            font-size: 18px;
         }
     }
 }

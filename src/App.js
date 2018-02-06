@@ -52,7 +52,8 @@ class App extends Component {
     }
 
     render() {
-        if (this.state.restaurants) {
+        const { restaurants } =  this.state;
+        if (restaurants) {
             return (
                 <BrowserRouter>
                     <Switch>
@@ -60,21 +61,21 @@ class App extends Component {
                             exact
                             path="/"
                             render={() => (
-                                <Home restaurants={this.state.restaurants} />
+                                <Home restaurants={restaurants} />
                             )}
                         />
                         <Route
                             exact
                             path="/restaurants"
                             render={() => (
-                                <ViewAll restaurants={this.state.restaurants} />
+                                <ViewAll restaurants={restaurants} />
                             )}
                         />
                         <Route
                             exact
                             path="/stats"
                             render={() => (
-                                <Stats restaurants={this.state.restaurants} />
+                                <Stats restaurants={restaurants} />
                             )}
                         />
 
@@ -84,7 +85,7 @@ class App extends Component {
                             path="/ding-tai-fung"
                             render={() => (
                                 <Restaurant
-                                    restaurant={this.state.restaurants.find(this.findRestaurant)}
+                                    restaurant={restaurants.find(this.findRestaurant)}
                                 />
                             )}
                         />

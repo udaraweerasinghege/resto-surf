@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-export default ({ subtitle, image, title }) => {
+export default ({ subtitle, image, title, random }) => {
     var Subtitle = (subtitle) => {
         if (subtitle) {
             return (
@@ -36,7 +36,7 @@ export default ({ subtitle, image, title }) => {
         if (image) {
             bannerImage = image;
         } else {
-            bannerImage = `/images/header-${RandomHeader()}.jpg`;
+            bannerImage = `/images/header-${ random ? RandomHeader() : '1'}.jpg`;
         }    
         
         var headerStyle = {

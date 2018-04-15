@@ -9,6 +9,7 @@ export default ({ restaurants }) => (
         <Banner
             title="Resto Surf"
             subtitle="Keep a log of your favourite restaurants and dishes!"
+            random={true}
         />
         <SearchBar />
         <RandomRestos restos={restaurants} />

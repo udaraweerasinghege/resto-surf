@@ -63,7 +63,7 @@ class RestaurantSearch extends Component {
             )
         } else {
             return (
-                <p>No restaurants to display.</p>
+                <p>No restaurants to display <span role="img" aria-label="disappointed face emoji">😔</span>.</p>
             )
         }
     };

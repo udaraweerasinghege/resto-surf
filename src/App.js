@@ -29,6 +29,10 @@ class App extends Component {
                   name
                   logo
                   slug
+                  likes
+                  dislikes
+                  notes
+                  visits
                 }
               }
             `;
@@ -57,41 +61,41 @@ class App extends Component {
                         <Route
                             exact
                             path="/"
-                            render={() => (
-                                <Home restaurants={restaurants} />
-                            )}
+                            render={() =>
+                                <Home restaurants={restaurants} {...this.props}/>
+                            }
                         />
                         <Route
                             exact
                             path="/restaurants"
-                            render={() => (
+                            render={() =>
                                 <ViewAll restaurants={restaurants} />
-                            )}
+                            }
                         />
                         <Route
                             exact
                             path="/stats"
-                            render={() => (
+                            render={() =>
                                 <Stats restaurants={restaurants} />
-                            )}
+                            }
                         />
 
                         {/* dynamically create routes with slugs (from db) */}
                         <Route
                             exact
-                            path="/ding-tai-fung"
-                            render={() => (
+                            path="/restaurants/ding-tai-fung"
+                            render={() =>
                                 <Restaurant
                                     restaurant={restaurants.find(this.findRestaurant)}
                                 />
-                            )}
+                            }
                         />
                         <Route
                             exact
                             path="/add"
-                            render={() => (
+                            render={() =>
                                 <AddNew />
-                            )}
+                            }
                         />
                         <Route exact path="*" component={NotFound} />
                     </Switch>

@@ -1,38 +1,33 @@
 import React, { Component, Fragment } from "react";
 import RestoTile from "./restoTile";
+import { withRouter } from 'react-router-dom';
 
 class RestaurantSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ''
+            search: '',
+            restaurants: []
         };
     }
 
-    componentWillMount = () => {
+    componentDidMount() {
         const restaurantList = this.props.restaurants;
         if (restaurantList) {
-            this.setState({ restaurants: restaurantList });
-        }
-    };
-    
-    componentDidMount = () => {        
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var search = url.searchParams.get("search");
-        if (search) {
-            this.setState({ search }, function() {
-                var searchTerm = this.state.search;
-                this.filterRestaurants(searchTerm);
+            this.setState({ restaurants: restaurantList }, () => {
+                if (this.props.location.state) {
+                    this.setState({ search: this.props.location.state.searchTerm}, () => {
+                        this.filterRestaurants(this.state.search)
+                    })
+                }
             });
         }
-    }
+    };
 
     handleChange = e => {
         var searchTerm = e.target.value;
-        this.setState({search: searchTerm}, function() {
-            var searchState = this.state.search;
-            this.filterRestaurants(searchState)
+        this.setState({ search: searchTerm}, () => {
+            this.filterRestaurants(this.state.search)
         })
     }
 
@@ -47,12 +42,7 @@ class RestaurantSearch extends Component {
     };
 
     restaurantList = () => {
-        var listToDisplay;
-        if (this.state.filteredRestaurants) {
-            listToDisplay = this.state.filteredRestaurants;
-        } else {
-            listToDisplay = this.state.restaurants;
-        }
+        const listToDisplay = this.state.filteredRestaurants ? this.state.filteredRestaurants : this.state.restaurants;
         if (listToDisplay.length > 0) {
             return (
                 <div className="resto-list">
@@ -68,6 +58,10 @@ class RestaurantSearch extends Component {
         }
     };
 
+    handleOnClick = e => {
+        e.preventDefault();
+    };
+
     render() {
         return (
             <Fragment>
@@ -81,7 +75,7 @@ class RestaurantSearch extends Component {
                             id="restaurant-search"
                             value={this.state.search}
                         />
-                        <input type="submit" value="Search" />
+                        <input type="submit" value="Search" onClick={this.handleOnClick}/>
                     </form>
                 </div>
                 {this.restaurantList()}
@@ -90,4 +84,4 @@ class RestaurantSearch extends Component {
     }
 }
 
-export default RestaurantSearch;
+export default withRouter(RestaurantSearch);

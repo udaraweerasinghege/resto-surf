@@ -8,7 +8,7 @@ export default ({ img, name, slug }) => {
     };
 
     return (
-        <a href={slug} className="tile-container" style={divStyle}>
+        <a href={`/restaurants/${slug}`} className="tile-container" style={divStyle}>
             <div className="tile-name-container">
                 <div className="resto-name">
                     <h2>{name}</h2>

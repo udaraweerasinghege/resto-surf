@@ -33,14 +33,14 @@ html, body {
 .resto-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 50px 5%;
+    grid-gap: 50px 35px;
     margin: 30px auto;
     justify-items: left;
-    @media (max-width: 798px) {
+    @media (max-width: 1227px) {
       justify-items: center;
     }
     @media (max-width: 450px) {
-      grid-gap: 25px 5%;
+      grid-gap: 25px 15px;
     }
 }
 
@@ -49,6 +49,7 @@ html, body {
     position: relative;
     border-radius: 3px;
     width: 100%;
+    max-width: 360px;
     box-shadow: 0 3px 15px rgba(0,0,0,0.25);
     @include transition;
     h2 {

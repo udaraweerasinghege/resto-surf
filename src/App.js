@@ -28,10 +28,7 @@ class App extends Component {
                   id
                   name
                   logo
-                  likes
-                  dislikes
-                  notes
-                  visits
+                  slug
                 }
               }
             `;

@@ -19,7 +19,7 @@ export default ({ restaurant }) => {
     return (
         <Layout>
             <Banner image={logo} title={name} />
-            <div className="restaurant-details">
+            <div className="restaurant-details container">
                 <div className="restaurant-details-section restaurant-details-liked">
                     <h2>We Liked:</h2>
                     <ul>{stringToList(likes)}</ul>

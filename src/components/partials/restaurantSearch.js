@@ -56,9 +56,9 @@ class RestaurantSearch extends Component {
         if (listToDisplay.length > 0) {
             return (
                 <div className="resto-list">
-                    {listToDisplay.map(r => {
-                        return <RestoTile name={r.name} key={r.id} img={r.logo} />;
-                    })}
+                    {listToDisplay.map(r => 
+                        <RestoTile name={r.name} key={r.id} img={r.logo} slug={r.slug}/>
+                    )}
                 </div>
             )
         } else {

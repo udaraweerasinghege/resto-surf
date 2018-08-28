@@ -6,6 +6,8 @@ import SearchBar from "../partials/searchBar";
 export default ({ restaurants }) => (
     <Layout>
         <Banner title="404" subtitle="Sorry, couldn't find that page." image="/images/header-5.jpg" />
-        <SearchBar />
+        <div className="container">
+            <SearchBar />
+        </div>
     </Layout>
 );

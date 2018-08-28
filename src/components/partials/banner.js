@@ -51,7 +51,10 @@ export default ({ subtitle, image, title, random }) => {
     return (
        <Fragment>
             {BannerImage(image)}
-            {Title(title)}
+            
+            <div className="container">
+                {Title(title)}
+            </div>
         </Fragment>
     )
 };

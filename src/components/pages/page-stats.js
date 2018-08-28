@@ -29,12 +29,14 @@ export default ({ restaurants }) => {
                 subtitle="Top restaurants by visits" 
                 image="/images/header-3.jpg"
             />
-            <h2>All Time</h2>
-            <ul className="stats-list">
-                {allTimeArr.map((r, index) => {
-                    return <RestoRank name={r.name} key={r.id} rank={index + 1} visits={r.visits}/>;
-                })}
-            </ul>
+            <div className="container">
+                <h2>All Time</h2>
+                <ul className="stats-list">
+                    {allTimeArr.map((r, index) => 
+                        <RestoRank name={r.name} key={r.id} rank={index + 1} visits={r.visits}/>
+                    )}
+                </ul>
+            </div>
         </Layout>
     );
 };

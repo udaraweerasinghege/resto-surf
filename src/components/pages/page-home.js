@@ -11,7 +11,11 @@ export default ({ restaurants }) => (
             subtitle="Keep a log of your favourite restaurants and dishes!"
             image="/images/header-1.jpg"
         />
-        <SearchBar />
-        <RandomRestos restos={restaurants} />
+        <div className="container">
+            <SearchBar />
+        </div>
+        <div className="container">
+            <RandomRestos restos={restaurants} />
+        </div>
     </Layout>
 );

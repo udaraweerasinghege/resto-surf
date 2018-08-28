@@ -4,7 +4,7 @@
     margin-top: 160px;
     display: flex;
     flex-wrap: wrap;
-    .restaurant-details-section {
+    &-section {
         flex-basis: calc(50% - 40px);
         min-width: 300px;
         margin: 20px auto;
@@ -13,7 +13,7 @@
             margin-right: 0;
         }
     }
-    .restaurant-details-visits {
+    &-visits {
         display: flex;
         align-items: start;
         h2 {

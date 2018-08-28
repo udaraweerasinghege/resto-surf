@@ -1,13 +1,12 @@
 import React from "react";
 
-export default ({ img, name }) => {
+export default ({ img, name, slug }) => {
     var divStyle = {
         backgroundImage: `url('${img}')`,
         backgroundSize: "cover",
         backgroundPosition: "center"
     };
-    // slug should be generated and kept in db? and unique
-    var slug = name.replace(/\s+/g, "-").toLowerCase();
+
     return (
         <a href={slug} className="tile-container" style={divStyle}>
             <div className="tile-name-container">

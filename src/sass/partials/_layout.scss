@@ -11,7 +11,7 @@ html, body {
 }
 
 .container {
-  max-width: 1440px;
+  max-width: 1200px;
   width: 80%;
   margin: 0 auto;
 }
@@ -35,7 +35,10 @@ html, body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 50px 5%;
     margin: 30px auto;
-    justify-items: center;
+    justify-items: left;
+    @media (max-width: 798px) {
+      justify-items: center;
+    }
     @media (max-width: 450px) {
       grid-gap: 25px 5%;
     }
@@ -45,7 +48,6 @@ html, body {
     height: 215px;
     position: relative;
     border-radius: 3px;
-    max-width: 350px;
     width: 100%;
     box-shadow: 0 3px 15px rgba(0,0,0,0.25);
     @include transition;

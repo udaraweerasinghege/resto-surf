@@ -6,6 +6,8 @@ import Layout from "../layout";
 export default ({ restaurants }) => (
     <Layout>
         <Banner title="All Restaurants" image="/images/header-2.jpg" />
-        <RestaurantSearch restaurants={restaurants} />
+        <div className="container">
+            <RestaurantSearch restaurants={restaurants} />
+        </div>
     </Layout>
 );

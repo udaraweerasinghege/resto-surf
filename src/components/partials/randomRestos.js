@@ -6,7 +6,7 @@ const randomNum = max => {
 };
 
 export default ({ restos }) => {
-    const RANDOM_RESTOS_MAX = 8;
+    const RANDOM_RESTOS_MAX = 9;
     const maxNum = restos.length;
 
     let randomRestoArr = [];
@@ -24,9 +24,9 @@ export default ({ restos }) => {
                 Here are some random restaurants for you:
             </p>
             <div className="resto-list">
-                {randomRestoArr.map(r => {
-                    return <RestoTile name={r.name} key={r.id} img={r.logo} />;
-                })}
+                {randomRestoArr.map(r => 
+                    <RestoTile name={r.name} key={r.id} img={r.logo} slug={r.slug}/>
+                )}
             </div>
         </Fragment>
     );

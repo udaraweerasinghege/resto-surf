@@ -7,6 +7,7 @@ html, body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .container {
@@ -34,15 +35,18 @@ html, body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 50px 5%;
     margin: 30px auto;
+    justify-items: center;
     @media (max-width: 450px) {
       grid-gap: 25px 5%;
     }
 }
 
 .tile-container {
-    height: 200px;
+    height: 215px;
     position: relative;
     border-radius: 3px;
+    max-width: 350px;
+    width: 100%;
     box-shadow: 0 3px 15px rgba(0,0,0,0.25);
     @include transition;
     h2 {
@@ -50,11 +54,6 @@ html, body {
     }
     &:hover {
       transform: scale(1.05);
-    }
-    @media (max-width: 450px) {
-      width: 135%;
-      left: 50%;
-      transform: translateX(-50%);
     }
 }
 
@@ -67,6 +66,6 @@ html, body {
   border-bottom-right-radius: 3px;
   .resto-name {
     text-align: center;
-    padding: 12px;
+    padding: 15px 12px;
   }
 }

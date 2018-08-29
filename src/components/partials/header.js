@@ -29,11 +29,6 @@ export default ({ restaurants }) => (
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/restaurants/ding-tai-fung" exact>
-                                Restaurant
-                            </NavLink>
-                        </li>
-                        <li>
                             <NavLink to="/add" exact>
                                 Add New
                             </NavLink>

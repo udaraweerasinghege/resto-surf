@@ -10,6 +10,16 @@ export default class pageAddResto extends React.Component {
         }
     }
 
+    /*
+     Slug formatting:
+     - must be lowercase
+     - no special characters (', &, ., etc.)
+     - accents replaced with correct alpha-letter (ie. é --> e)
+     - spaces replaced with -
+     - must be unique
+     - if not unique, auto increment number (ie. mcdonalds2, the-keg3)
+    */
+
     createRestoQuery = () => (
        `mutation {
             createRestaurant(restoName: "${this.state.name}", mainImage: "${this.state.photos}") {

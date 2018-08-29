@@ -47,10 +47,6 @@ class App extends Component {
             throw e;
         }
     };
-    
-    findRestaurant = restaurant => { 
-        return restaurant.name === 'Ding Tai Fung';
-    }
 
     render() {
         const { restaurants } =  this.state;
@@ -79,16 +75,10 @@ class App extends Component {
                                 <Stats restaurants={restaurants} />
                             }
                         />
-
-                        {/* dynamically create routes with slugs (from db) */}
                         <Route
                             exact
-                            path="/restaurants/ding-tai-fung"
-                            render={() =>
-                                <Restaurant
-                                    restaurant={restaurants.find(this.findRestaurant)}
-                                />
-                            }
+                            path="/restaurants/:slug"
+                            component={Restaurant}
                         />
                         <Route
                             exact

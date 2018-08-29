@@ -37,6 +37,7 @@ header {
             text-decoration: none;
             display: flex;
             align-items: center;
+            letter-spacing: 0.5px;
             @include transition;
             &:hover {
                 color: $link_hover_color;

@@ -58,7 +58,7 @@ class App extends Component {
                             exact
                             path="/"
                             render={() =>
-                                <Home restaurants={restaurants} {...this.props}/>
+                                <Home restaurants={restaurants} />
                             }
                         />
                         <Route

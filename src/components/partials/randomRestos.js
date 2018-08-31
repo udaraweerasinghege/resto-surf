@@ -5,13 +5,12 @@ const randomNum = max => {
     return Math.floor(Math.random() * Math.floor(max));
 };
 
-export default ({ restos }) => {
-    const RANDOM_RESTOS_MAX = 9;
+export default ({ restos, qty }) => {
     const maxNum = restos.length;
 
     let randomRestoArr = [];
 
-    while (randomRestoArr.length < RANDOM_RESTOS_MAX) {
+    while (randomRestoArr.length < qty) {
         let randomIndex = randomNum(maxNum);
         let randomRestaurant = restos[randomIndex];
         if (!randomRestoArr.includes(randomRestaurant)) {

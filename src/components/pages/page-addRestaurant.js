@@ -6,19 +6,15 @@ export default class pageAddResto extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            created: null
+            name: '',
+            likes: '',
+            dislikes: '',
+            notes: '',
+            photo: '',
+            created: false,
+            status: ''
         }
     }
-
-    /*
-     Slug formatting:
-     - must be lowercase
-     - no special characters (', &, ., etc.)
-     - accents replaced with correct alpha-letter (ie. é --> e)
-     - spaces replaced with -
-     - must be unique
-     - if not unique, auto increment number (ie. mcdonalds2, the-keg3)
-    */
 
     createRestoQuery = () => (
        `mutation {
@@ -26,7 +22,31 @@ export default class pageAddResto extends React.Component {
               id
             }
         }`
-    )
+    );
+
+    searchYelp = async(term, lat, long) => {
+        // fetch(`/api/yelpsearch?term=${term}&lat=${lat}&long=${long}`)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         const businesses = data.businesses;
+        //         console.log(businesses);
+        //         document.getElementById('spinner').classList.add('hidden');
+        //     })
+        //     .catch(e => {
+        //         throw e;
+        //     });
+    };
+
+    getYelpBusiness = async id => {
+        fetch(`/api/yelp?id=${id}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(e => {
+                throw e;
+            });
+    };
     
     handleSubmit = async e => {
         e.preventDefault();
@@ -50,24 +70,47 @@ export default class pageAddResto extends React.Component {
     handleFormChange = e => {
         this.setState({ [e.target.name]: e.target.value })
     }
+
+    handleNameChange = e => {
+        this.setState({ name: e.target.value}, () => {
+            const searchTerm = this.state.name;
+            const dropdownMessage = document.getElementsByClassName('message')[0];
+
+            if (searchTerm.length >= 3) {
+                dropdownMessage.classList.add('hidden');
+                document.getElementById('spinner').classList.remove('hidden');
+                setTimeout(() => {
+                    // show loader spinner here
+                    this.searchYelp(searchTerm)
+                }, 1000)
+            } else {
+                dropdownMessage.classList.remove('hidden');
+                document.getElementById('spinner').classList.add('hidden');
+            }
+        })
+    }
     
     render() {
-        const statusMessage = this.state.created !== null ? 
+        const statusMessage = this.state.created ?
         ((this.state.created ?
             //include link to profile
-            <p>Success! {this.state.name} was added.</p> : 
+            <p>Success! {this.state.name} was added.</p> :
             <p>Sorry, something went wrong.</p>
         )) : null;
 
         return (
-            <Layout>
+            <Layout page="add_new">
                 <Banner title="Add New" image="/images/header-4.jpg" />
                 <div className="container">
                     { statusMessage }
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="name">
                             Restaurant Name
-                            <input type="text" id="name" name="name" onChange={this.handleFormChange}/>
+                            <input type="text" id="name" name="name" onChange={this.handleNameChange}/>
+                            <div className="dropdown">
+                                <p className="message">Type at least 3 characters...</p>
+                                <i className="fa fa-spinner fa-spin hidden" id="spinner"/>
+                            </div>
                         </label>
                         <br />
                         <label htmlFor="likes">

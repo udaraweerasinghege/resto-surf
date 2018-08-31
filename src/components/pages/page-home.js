@@ -15,7 +15,7 @@ export default ({ restaurants }) => (
             <SearchBar />
         </div>
         <div className="container">
-            <RandomRestos restos={restaurants} />
+            <RandomRestos restos={restaurants} qty={6}/>
         </div>
     </Layout>
 );

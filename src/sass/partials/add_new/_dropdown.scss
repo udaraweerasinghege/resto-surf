@@ -1,0 +1,17 @@
+.add_new {
+  .dropdown {
+    display: none;
+
+    .hidden {
+      display: none;
+    }
+  }
+
+  input#name {
+    &:focus {
+      & + .dropdown {
+        display: block;
+      }
+    }
+  }
+}

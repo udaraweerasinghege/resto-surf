@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import RestoTile from "./restoTile";
 import { withRouter } from 'react-router-dom';
+import RestoTile from "./restoTile";
 
 class RestaurantSearch extends Component {
     constructor(props) {

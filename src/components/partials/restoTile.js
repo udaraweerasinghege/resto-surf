@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default ({ img, name, slug }) => {
     var divStyle = {
@@ -8,12 +9,12 @@ export default ({ img, name, slug }) => {
     };
 
     return (
-        <a href={`/restaurants/${slug}`} className="tile-container" style={divStyle}>
+        <Link to={`/restaurants/${slug}`} className="tile-container" style={divStyle}>
             <div className="tile-name-container">
                 <div className="resto-name">
                     <h2>{name}</h2>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 };

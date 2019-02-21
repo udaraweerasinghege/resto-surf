@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
-export default ({ subtitle, image, title, random }) => {
+export default ({ subtitle, image, title, random, id }) => {
     var Subtitle = (subtitle) => {
         if (subtitle) {
             return (
@@ -50,10 +51,14 @@ export default ({ subtitle, image, title, random }) => {
 
     return (
        <Fragment>
-            {BannerImage(image)}
-            
+            {BannerImage(image)}      
             <div className="container">
                 {Title(title)}
+                <Link to='/edit' params={{ id: '123'} }>Edit</Link>
+                {/* <Link to={{
+                    pathname:'/edit/:id', 
+                    id: 222
+                    }}>Edit</Link> */}
             </div>
         </Fragment>
     )

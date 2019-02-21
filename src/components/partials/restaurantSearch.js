@@ -3,12 +3,9 @@ import { withRouter } from 'react-router-dom';
 import RestoTile from "./restoTile";
 
 class RestaurantSearch extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            search: '',
-            restaurants: []
-        };
+    state = {
+        search: '',
+        restaurants: []
     }
 
     componentDidMount() {

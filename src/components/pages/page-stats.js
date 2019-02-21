@@ -1,9 +1,11 @@
 import React from "react";
+import {fromRenderProps, compose} from 'recompose'
+import {AppContext} from "../../context/AppContext";
 import RestoRank from "../partials/stats/restoRanking";
 import Banner from "../partials/banner";
 import Layout from "../layout";
 
-export default ({ restaurants }) => {
+const StatsPage = ({ restaurants }) => {
 
     var compare = (a, b) => {
         const restoA = a.visits;
@@ -33,10 +35,12 @@ export default ({ restaurants }) => {
                 <h2>All Time</h2>
                 <ul className="stats-list">
                     {allTimeArr.map((r, index) => 
-                        <RestoRank name={r.name} key={r.id} rank={index + 1} visits={r.visits}/>
+                        <RestoRank name={r.name} key={r.id} rank={index + 1} visits={r.visits} slug={r.slug}/>
                     )}
                 </ul>
             </div>
         </Layout>
     );
 };
+
+export default compose(fromRenderProps(AppContext.Consumer, (context) => (context)))(StatsPage)

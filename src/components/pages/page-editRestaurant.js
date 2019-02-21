@@ -1,10 +1,8 @@
 import React from "react";
-import {fromRenderProps, compose} from 'recompose'
-import {AppContext} from "../../context/AppContext";
 import Banner from "../partials/banner";
 import Layout from "../layout";
 
-class pageAddResto extends React.Component {
+export default class pageEditResto extends React.Component {
     state = {
         name: '',
         likes: '',
@@ -12,45 +10,47 @@ class pageAddResto extends React.Component {
         notes: '',
         photo: '',
         created: false,
-        status: '', 
-        yelpStatusMessage: ''
+        status: ''
     }
+
+    componentDidMount = () => {
+        console.log(this.props);
+        // getRestaurantData();
+    }
+
+    getRestaurantData = async (slug) => {
+        try {
+            const query = `
+                {
+                    restaurant(slug: "${slug}") {
+                        id
+                        name
+                        notes
+                        likes
+                        dislikes
+                        visits
+                        logo
+                    }
+                }
+            `;
+            const restoRes = await fetch(`/graphql?query=${query}`);
+            const resto = await restoRes.json();
+            const restoData = resto.data.restaurant[0];
+            this.setState({
+                ...restoData
+            });
+        } catch (e) {
+            throw e;
+        }
+    };
 
     createRestoQuery = () => (
        `mutation {
-            createRestaurant(restoName: "${this.state.name}", mainImage: "${this.state.photos}") {
+            // createRestaurant(restoName: "${this.state.name}", mainImage: "${this.state.photos}") {
               id
             }
         }`
     );
-
-    searchYelp = async(term, lat, long) => {
-        fetch(`/api/yelp-search?term=${term}&lat=${lat}&long=${long}`)
-            .then(res => res.json())
-            .then(data => {
-                const businesses = data.businesses;
-                document.getElementById('spinner').classList.add('hidden');
-                if (businesses.length) {
-                    this.getYelpBusiness(businesses[0].id)
-                } else {
-                    this.setState({yelpStatusMessage: 'No businesses found.'})
-                };
-            })
-            .catch(e => {
-                throw e;
-            });
-    };
-
-    getYelpBusiness = async id => {
-        fetch(`/api/yelp-business?id=${id}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(e => {
-                throw e;
-            });
-    };
     
     handleSubmit = async e => {
         e.preventDefault();
@@ -76,8 +76,7 @@ class pageAddResto extends React.Component {
     }
 
     handleNameChange = e => {
-        e.preventDefault();
-        this.setState({ name: e.target.value, yelpStatusMessage: ''}, () => {
+        this.setState({ name: e.target.value}, () => {
             const searchTerm = this.state.name;
             const dropdownMessage = document.getElementsByClassName('message')[0];
 
@@ -86,7 +85,7 @@ class pageAddResto extends React.Component {
                 document.getElementById('spinner').classList.remove('hidden');
                 setTimeout(() => {
                     // show loader spinner here
-                    this.searchYelp(searchTerm, this.props.location.latitude, this.props.location.longitude)
+                    this.searchYelp(searchTerm)
                 }, 1000)
             } else {
                 dropdownMessage.classList.remove('hidden');
@@ -94,18 +93,18 @@ class pageAddResto extends React.Component {
             }
         })
     }
-
+    
     render() {
         const statusMessage = this.state.created ?
         ((this.state.created ?
             //include link to profile
-            <p>Success! {this.state.name} was added.</p> :
+            <p>Success! {this.state.name} was updated.</p> :
             <p>Sorry, something went wrong.</p>
         )) : null;
 
         return (
-            <Layout page="add_new">
-                <Banner title="Add New" image="/images/header-4.jpg" />
+            <Layout page="edit">
+                <Banner title={`Edit ${this.state.name}`} image="/images/header-4.jpg" />
                 <div className="container">
                     { statusMessage }
                     <form onSubmit={this.handleSubmit}>
@@ -114,7 +113,6 @@ class pageAddResto extends React.Component {
                             <input type="text" id="name" name="name" onChange={this.handleNameChange}/>
                             <div className="dropdown">
                                 <p className="message">Type at least 3 characters...</p>
-                                <p className="yelp-message">{this.state.yelpStatusMessage}</p>
                                 <i className="fa fa-spinner fa-spin hidden" id="spinner"/>
                             </div>
                         </label>
@@ -160,5 +158,3 @@ class pageAddResto extends React.Component {
         )
     }
 }
-
-export default compose(fromRenderProps(AppContext.Consumer, (context) => (context)))(pageAddResto)

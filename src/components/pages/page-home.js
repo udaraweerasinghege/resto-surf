@@ -4,7 +4,7 @@ import RandomRestos from "../partials/randomRestos";
 import Banner from "../partials/banner";
 import Layout from "../layout";
 
-export default ({ restaurants }) => (
+export default () => (
     <Layout page="home">
         <Banner
             title="Resto Surf"
@@ -15,7 +15,7 @@ export default ({ restaurants }) => (
             <SearchBar />
         </div>
         <div className="container">
-            <RandomRestos restos={restaurants} qty={6}/>
+            <RandomRestos qty={6}/>
         </div>
     </Layout>
 );

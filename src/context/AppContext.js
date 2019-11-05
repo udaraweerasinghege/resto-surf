@@ -1,15 +1,7 @@
 import React, {Component, createContext} from "react";
 import PropTypes from 'prop-types';
 
-export const AppContext = createContext({
-    restaurants: [],
-    loading: true,
-    location: {
-        latitude: null,
-        longitude: null
-    },
-    error: ''
-});
+export const AppContext = createContext({ ...this.state });
 
 export default class AppProvider extends Component {
     componentWillMount = async () => {
@@ -85,9 +77,10 @@ export default class AppProvider extends Component {
         restaurants: [],
         loading: true,
         location: {
-            latitude: 0,
-            longitude: 0,
+            latitude: null,
+            longitude: null,
         },
+        error: '',
         updateField: this.updateField,
         updateFields: this.updateFields,
     };

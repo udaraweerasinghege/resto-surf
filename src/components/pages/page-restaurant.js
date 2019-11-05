@@ -11,7 +11,7 @@ class Restaurant extends Component {
         likes: '',
         dislikes: '',
         notes: '',
-        id: 0
+        id: null
     };
 
     componentDidMount() {
@@ -39,11 +39,11 @@ class Restaurant extends Component {
             const restoRes = await fetch(`/graphql?query=${query}`);
             const resto = await restoRes.json();
             const restoData = resto.data.restaurantSlug[0];
-            this.setState({
-                ...restoData
-            }, () => {
-                console.log(this.state);
-            });
+            if (restoData) {
+                this.setState({ ...restoData });
+            } else {
+                this.props.history.push('/404')
+            }
         } catch (e) {
             throw e;
         }

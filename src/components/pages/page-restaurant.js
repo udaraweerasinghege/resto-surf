@@ -11,6 +11,7 @@ class Restaurant extends Component {
         likes: '',
         dislikes: '',
         notes: '',
+        id: 0
     };
 
     componentDidMount() {
@@ -24,7 +25,7 @@ class Restaurant extends Component {
         try {
             const query = `
                 {
-                    restaurant(slug: "${slug}") {
+                    restaurantSlug(slug: "${slug}") {
                         id
                         name
                         notes
@@ -37,9 +38,11 @@ class Restaurant extends Component {
             `;
             const restoRes = await fetch(`/graphql?query=${query}`);
             const resto = await restoRes.json();
-            const restoData = resto.data.restaurant[0];
+            const restoData = resto.data.restaurantSlug[0];
             this.setState({
                 ...restoData
+            }, () => {
+                console.log(this.state);
             });
         } catch (e) {
             throw e;
@@ -47,42 +50,39 @@ class Restaurant extends Component {
     };
 
     stringToList = string =>
-        string ?
-            string.split("\n").map(item =>
-                (
-                    <li key={item}>
-                        {item}
-                        <br/>
-                    </li>
-                )
-            )
-            : null;
-
+        string && string.split('<br />').map(item => (
+            <li key={item}>
+                {item}
+                <br/>
+            </li> ));
 
     render() {
-        const {name, logo, visits, likes, dislikes, notes} = this.state;
+        const {name, logo, visits, likes, dislikes, notes, id} = this.state;
         return (
             <Layout>
-                <Banner image={logo} title={name}/>
-                <div className="restaurant-details container">
-                    <div className="restaurant-details-section restaurant-details-liked">
-                        <h2>We Liked:</h2>
-                        <ul>{this.stringToList(likes)}</ul>
+            {id !== 0 &&
+                <React.Fragment>
+                    <Banner image={logo} title={name} id={id} edit={true}/>
+                    <div className="restaurant-details container">
+                        <div className="restaurant-details-section restaurant-details-liked">
+                            <h2>Definitely order:</h2>
+                            <ul>{this.stringToList(likes)}</ul>
+                        </div>
+                        <div className="restaurant-details-section restaurant-details-disliked">
+                            <h2>Do not order:</h2>
+                            <ul>{this.stringToList(dislikes)}</ul>
+                        </div>
+                        <div className="restaurant-details-section restaurant-details-notes">
+                            <h2>Notes:</h2>
+                            <ul>{this.stringToList(notes)}</ul>
+                        </div>
+                        <div className="restaurant-details-section restaurant-details-visits">
+                            <h2>Visits:</h2>
+                            <p id="restaurant-visits-count">{visits}</p>
+                            <button className="btn visits-btn">+1</button>
+                        </div>
                     </div>
-                    <div className="restaurant-details-section restaurant-details-disliked">
-                        <h2>We Didn't Like:</h2>
-                        <ul>{this.stringToList(dislikes)}</ul>
-                    </div>
-                    <div className="restaurant-details-section restaurant-details-notes">
-                        <h2>Additional Notes:</h2>
-                        <ul>{this.stringToList(notes)}</ul>
-                    </div>
-                    <div className="restaurant-details-section restaurant-details-visits">
-                        <h2>Visits:</h2>
-                        <p id="restaurant-visits-count">{visits}</p>
-                        <button className="btn visits-btn">+1</button>
-                    </div>
-                </div>
+                </React.Fragment>}
             </Layout>
         );
     }

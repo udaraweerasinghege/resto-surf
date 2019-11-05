@@ -5,8 +5,8 @@ export const AppContext = createContext({
     restaurants: [],
     loading: true,
     location: {
-        latitude: 0,
-        longitude: 0,
+        latitude: null,
+        longitude: null
     },
     error: ''
 });
@@ -39,9 +39,6 @@ export default class AppProvider extends Component {
                   name
                   logo
                   slug
-                  likes
-                  dislikes
-                  notes
                   visits
                 }
               }
@@ -94,12 +91,6 @@ export default class AppProvider extends Component {
         updateField: this.updateField,
         updateFields: this.updateFields,
     };
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (JSON.stringify(prevState) !== JSON.stringify(this.state)) {
-    //         this.calculateTotal();
-    //     }
-    // }
 
     render() {
         return (

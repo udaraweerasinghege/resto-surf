@@ -1,0 +1,7 @@
+Todo:
+
+- Likes, Dislikes, Notes as array/points on page-restaurant and page-editRestaurant
+- Auto generate/save slugs
+- Use Apollo Express
+- Nearby restaurants
+- Delete restaurant

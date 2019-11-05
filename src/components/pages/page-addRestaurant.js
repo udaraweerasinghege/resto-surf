@@ -3,6 +3,7 @@ import {fromRenderProps, compose} from 'recompose'
 import {AppContext} from "../../context/AppContext";
 import Banner from "../partials/banner";
 import Layout from "../layout";
+import debounce from "../../util/debounce"
 
 class pageAddResto extends React.Component {
     state = {
@@ -10,19 +11,24 @@ class pageAddResto extends React.Component {
         likes: '',
         dislikes: '',
         notes: '',
-        photo: '',
+        photos: '',
         created: false,
         status: '', 
-        yelpStatusMessage: ''
+        visits: 1,
+        yelpStatusMessage: '',
+        dropdownOptions: []
     }
 
-    createRestoQuery = () => (
-       `mutation {
-            createRestaurant(restoName: "${this.state.name}", mainImage: "${this.state.photos}") {
-              id
-            }
-        }`
-    );
+    createRestoQuery = () => {
+        const { name, photos, likes, dislikes, notes, visits } = this.state;
+        return (
+            `mutation {
+                createRestaurant(restoName: "${name}", mainImage: "${photos}", likes: "${likes}", dislikes: "${dislikes}", notes: "${notes}", visits: ${visits}) {
+                id
+                }
+            }`
+        )
+    };
 
     searchYelp = async(term, lat, long) => {
         fetch(`/api/yelp-search?term=${term}&lat=${lat}&long=${long}`)
@@ -31,7 +37,8 @@ class pageAddResto extends React.Component {
                 const businesses = data.businesses;
                 document.getElementById('spinner').classList.add('hidden');
                 if (businesses.length) {
-                    this.getYelpBusiness(businesses[0].id)
+                        this.setState({ dropdownOptions: businesses})
+                    // this.getYelpBusiness(businesses[0].id)
                 } else {
                     this.setState({yelpStatusMessage: 'No businesses found.'})
                 };
@@ -75,6 +82,10 @@ class pageAddResto extends React.Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    debouncedSearch = debounce(() => {
+        this.searchYelp(this.state.name, this.props.location.latitude, this.props.location.longitude)
+    }, 1000)
+
     handleNameChange = e => {
         e.preventDefault();
         this.setState({ name: e.target.value, yelpStatusMessage: ''}, () => {
@@ -84,10 +95,7 @@ class pageAddResto extends React.Component {
             if (searchTerm.length >= 3) {
                 dropdownMessage.classList.add('hidden');
                 document.getElementById('spinner').classList.remove('hidden');
-                setTimeout(() => {
-                    // show loader spinner here
-                    this.searchYelp(searchTerm, this.props.location.latitude, this.props.location.longitude)
-                }, 1000)
+                this.debouncedSearch();
             } else {
                 dropdownMessage.classList.remove('hidden');
                 document.getElementById('spinner').classList.add('hidden');
@@ -96,12 +104,12 @@ class pageAddResto extends React.Component {
     }
 
     render() {
-        const statusMessage = this.state.created ?
-        ((this.state.created ?
-            //include link to profile
-            <p>Success! {this.state.name} was added.</p> :
-            <p>Sorry, something went wrong.</p>
-        )) : null;
+        const { created, name, dropdownOptions, yelpStatusMessage, dislikes, likes, notes } = this.state;
+        const statusMessage = created &&
+            (this.state.created ?
+                //include link to profile
+                <p>Success! {name} was added.</p> :
+                <p>Sorry, something went wrong.</p>)
 
         return (
             <Layout page="add_new">
@@ -110,12 +118,17 @@ class pageAddResto extends React.Component {
                     { statusMessage }
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="name">
-                            Restaurant Name
+                            Restaurant Name<span className="required">*</span>
                             <input type="text" id="name" name="name" onChange={this.handleNameChange}/>
                             <div className="dropdown">
                                 <p className="message">Type at least 3 characters...</p>
-                                <p className="yelp-message">{this.state.yelpStatusMessage}</p>
+                                { yelpStatusMessage !== '' && <p className="yelp-message">{yelpStatusMessage}</p> }
                                 <i className="fa fa-spinner fa-spin hidden" id="spinner"/>
+                                { dropdownOptions.length > 0 && name.length > 0 &&
+                                    <ul id="restaurant-options">
+                                        {dropdownOptions.map(resto =><li className="restaurant-option" value={resto.id} key={resto.id}>{resto.name}</li>)}
+                                    </ul>
+                                }
                             </div>
                         </label>
                         <br />
@@ -126,7 +139,7 @@ class pageAddResto extends React.Component {
                                 Add new lines for each point
                             </small>
                             <br />
-                            <textarea id="likes" />
+                            <textarea id="likes" name="likes" value={likes} onChange={this.handleFormChange}/>
                         </label>
                         <br />
                         <label htmlFor="dislikes">
@@ -136,17 +149,17 @@ class pageAddResto extends React.Component {
                                 Add new lines for each point
                             </small>
                             <br />
-                            <textarea id="dislikes" />
+                            <textarea id="dislikes" name="dislikes" value={dislikes} onChange={this.handleFormChange}/>
                         </label>
                         <br />
                         <label htmlFor="notes">
                             Notes
-                            <textarea id="notes" />
+                            <textarea id="notes" name="notes" value={notes} onChange={this.handleFormChange}/>
                         </label>
                         <br />
                         <label htmlFor="visits">
                             Visits
-                            <input type="number" id="visits" defaultValue="1" />
+                            <input type="number" name="number" id="visits" defaultValue="1" onChange={this.handleFormChange} />
                         </label>
                         <br />
                         <label htmlFor="photos">

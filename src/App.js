@@ -11,8 +11,8 @@ class App extends Component {
                     {({ loading, restaurants, location }) => {
                         return (
                             <React.Fragment>
-                                {loading ? <Loader /> : null}
-                                { restaurants.length && location.latitude !== 0 ? <Routes /> : <Loader /> }
+                                { loading && <Loader /> }
+                                { !!restaurants.length && location.latitude >= 0 && <Routes /> }
                             </React.Fragment>
                         )
                     }}

@@ -5,6 +5,42 @@
     .hidden {
       display: none;
     }
+
+    #restaurant-options {
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+      padding: 8px 20px;
+      display: inline-block;
+      list-style: none;
+      width: 300px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.25);
+      position: absolute;
+      z-index: 10;
+      background: white;
+    }
+
+    .restaurant-option {
+      padding: 15px 20px;
+      position: relative;
+      margin: 0;
+
+      & + .restaurant-option {
+        border-top: 1px solid lightgrey;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        width: 5px;
+        height: 5px;
+        background: lightgrey;
+        border-radius: 100%;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
   }
 
   input#name {

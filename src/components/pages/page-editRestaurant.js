@@ -1,29 +1,43 @@
 import React from "react";
+import {fromRenderProps, compose} from 'recompose'
+import {AppContext} from "../../context/AppContext";
 import Banner from "../partials/banner";
 import Layout from "../layout";
 
-export default class pageEditResto extends React.Component {
+class pageEditResto extends React.Component {
     state = {
+        id: 0,
         name: '',
         likes: '',
         dislikes: '',
         notes: '',
-        photo: '',
-        created: false,
-        status: ''
+        logo: '',
+        visits: 0,
+        updated: false,
+        error: '',
+        newName: '',
+        newLikes: '',
+        newDislikes: '',
+        newNotes: '',
+        newLogo: '',
+        newVisits: 0,
     }
 
     componentDidMount = () => {
-        console.log(this.props);
-        // getRestaurantData();
+        this.props.updateField('loading', true)
+        this.setState({
+            id: Number(this.props.match.params.id)
+        }, () => {
+            this.getRestaurantData(this.state.id);
+        })
     }
 
-    getRestaurantData = async (slug) => {
+    getRestaurantData = async (id) => {
         try {
             const query = `
                 {
-                    restaurant(slug: "${slug}") {
-                        id
+                    restaurantID(id: ${id}) {
+                        slug
                         name
                         notes
                         likes
@@ -35,126 +49,129 @@ export default class pageEditResto extends React.Component {
             `;
             const restoRes = await fetch(`/graphql?query=${query}`);
             const resto = await restoRes.json();
-            const restoData = resto.data.restaurant[0];
+            const restoData = resto.data.restaurantID[0];
             this.setState({
                 ...restoData
+            }, () => {
+                this.setState({
+                    newName: this.state.name,
+                    newLikes: this.state.likes,
+                    newDislikes: this.convertLineBreaks(this.state.dislikes),
+                    newNotes: this.state.notes,
+                    newLogo: this.state.logo,
+                    newVisits: this.state.visits,
+                }, () => {
+                    this.props.updateField('loading', false)
+                })
             });
         } catch (e) {
             throw e;
         }
     };
 
-    createRestoQuery = () => (
+    addLineBreaks = val => val ? val.replace('\n','<br />') : '';
+
+    convertLineBreaks = val => val ? val.replace('<br />','\n') : '';
+
+    updateRestoQuery = () => {
+        const { id, newLikes, newLogo, newName, newNotes, newVisits, newDislikes } = this.state;
+        return (
        `mutation {
-            // createRestaurant(restoName: "${this.state.name}", mainImage: "${this.state.photos}") {
+            updateRestaurant(restoID: ${id}, visits: ${newVisits}, name: "${newName}", likes: "${this.addLineBreaks(newLikes)}", dislikes: "${this.addLineBreaks(newDislikes)}", notes: "${this.addLineBreaks(newNotes)}", logo: "${newLogo}") {
               id
             }
         }`
-    );
+    )};
     
-    handleSubmit = async e => {
+    handleSubmit = e => {
         e.preventDefault();
-        try {
-            const query = this.createRestoQuery();
-            await fetch('/graphql', {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                method: 'POST',
-                body: JSON.stringify({query})
-            });
-            this.setState({ created: true });
-        } catch(e) {
-            this.setState({ created: false });
-            throw(e)
-        }
+        this.setState({ error: '' });
+        const query = this.updateRestoQuery();
+        fetch('/graphql', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({query})
+        }).then( res => res.json())
+        .then(data => {
+            if(data.data.updateRestaurant.id === this.state.id) {
+                this.setState({ updated: true });
+            } else {
+                this.setState({ updated: false });
+            }
+        })
+        .catch(e => {
+            this.setState({ error: 'An error has occurred.' });
+            throw(e);
+        });
     }
 
     handleFormChange = e => {
         this.setState({ [e.target.name]: e.target.value })
     }
-
-    handleNameChange = e => {
-        this.setState({ name: e.target.value}, () => {
-            const searchTerm = this.state.name;
-            const dropdownMessage = document.getElementsByClassName('message')[0];
-
-            if (searchTerm.length >= 3) {
-                dropdownMessage.classList.add('hidden');
-                document.getElementById('spinner').classList.remove('hidden');
-                setTimeout(() => {
-                    // show loader spinner here
-                    this.searchYelp(searchTerm)
-                }, 1000)
-            } else {
-                dropdownMessage.classList.remove('hidden');
-                document.getElementById('spinner').classList.add('hidden');
-            }
-        })
-    }
     
     render() {
-        const statusMessage = this.state.created ?
-        ((this.state.created ?
+        const statusMessage = this.state.updated ?
             //include link to profile
-            <p>Success! {this.state.name} was updated.</p> :
-            <p>Sorry, something went wrong.</p>
-        )) : null;
+            <p>Success! {this.state.name} was updated.</p> : (this.state.error ? <p>Sorry, something went wrong.</p> : null);
 
         return (
-            <Layout page="edit">
-                <Banner title={`Edit ${this.state.name}`} image="/images/header-4.jpg" />
-                <div className="container">
-                    { statusMessage }
-                    <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="name">
-                            Restaurant Name
-                            <input type="text" id="name" name="name" onChange={this.handleNameChange}/>
-                            <div className="dropdown">
-                                <p className="message">Type at least 3 characters...</p>
-                                <i className="fa fa-spinner fa-spin hidden" id="spinner"/>
-                            </div>
-                        </label>
-                        <br />
-                        <label htmlFor="likes">
-                            Likes
+            <React.Fragment>
+                {this.state.id !== 0 ? (
+                    <Layout page="edit">
+                    <Banner title={`Edit ${this.state.name}`} image={this.state.newLogo} />
+                    <div className="container">
+                        { statusMessage }
+                        <form onSubmit={this.handleSubmit}>
+                            <label htmlFor="name">
+                                Restaurant Name
+                                <input type="text" id="name" name="newName" onChange={this.handleFormChange} value={this.state.newName} />
+                            </label>
                             <br />
-                            <small className="form-help-text">
-                                Add new lines for each point
-                            </small>
+                            <label htmlFor="likes">
+                                Likes
+                                <br />
+                                <small className="form-help-text">
+                                    Add new lines for each point
+                                </small>
+                                <br />
+                                <textarea id="likes" name="newLikes" onChange={this.handleFormChange} value={this.state.newLikes} />
+                            </label>
                             <br />
-                            <textarea id="likes" />
-                        </label>
-                        <br />
-                        <label htmlFor="dislikes">
-                            Dislikes
+                            <label htmlFor="dislikes">
+                                Dislikes
+                                <br />
+                                <small className="form-help-text">
+                                    Add new lines for each point
+                                </small>
+                                <br />
+                                <textarea id="dislikes" name="newDislikes" onChange={this.handleFormChange} value={this.state.newDislikes} />
+                            </label>
                             <br />
-                            <small className="form-help-text">
-                                Add new lines for each point
-                            </small>
+                            <label htmlFor="notes">
+                                Notes
+                                <textarea id="notes" name="newNotes" onChange={this.handleFormChange} value={this.state.newNotes} />
+                            </label>
                             <br />
-                            <textarea id="dislikes" />
-                        </label>
-                        <br />
-                        <label htmlFor="notes">
-                            Notes
-                            <textarea id="notes" />
-                        </label>
-                        <br />
-                        <label htmlFor="visits">
-                            Visits
-                            <input type="number" id="visits" defaultValue="1" />
-                        </label>
-                        <br />
-                        <label htmlFor="photos">
-                            Photos
-                            <textarea id="photos" name="photos" onChange={this.handleFormChange}/>
-                        </label>
-                        <input type="submit" value="Submit"/>
-                    </form>
-                </div>
-            </Layout>
+                            <label htmlFor="visits">
+                                Visits
+                                <input type="number" id="visits" name="newVisits" onChange={this.handleFormChange} value={this.state.newVisits}/>
+                            </label>
+                            <br />
+                            <label htmlFor="logo">
+                                Logo
+                                <textarea id="logo" name="newLogo" onChange={this.handleFormChange} value={this.state.newLogo}/>
+                            </label>
+                            <input type="submit" value="Submit"/>
+                        </form>
+                    </div>
+                </Layout>
+                ): null}
+            </React.Fragment>
         )
     }
 }
+
+export default compose(fromRenderProps(AppContext.Consumer, (context) => (context)))(pageEditResto)
